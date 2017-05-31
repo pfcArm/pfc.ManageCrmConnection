@@ -179,7 +179,7 @@ namespace ConnectionLib
         {
             Boolean ssl;
             Boolean addConfig;
-            int configNumber;
+            //int configNumber;
             // Read the configuration from the disk, if it exists, at C:\Users\<username>\AppData\Roaming\CrmServer\Credentials.xml.
             Boolean isConfigExist = ReadConfigurations();
 
