@@ -216,11 +216,24 @@ namespace ConnectionLib
                 Console.WriteLine();
 
                 Console.Write("\nSpecify the saved server configuration number (1-{0}) [{0}] : ", configurations.Count);
-                String input = Console.ReadLine();
-                Console.WriteLine();
-                if (input == String.Empty) input = configurations.Count.ToString();
-                if (!Int32.TryParse(input, out configNumber)) configNumber = -1;
+                //String input = GetAppConfig.ConfigIndex;//Console.ReadLine();
+                //Console.WriteLine();
+                //if (input == String.Empty) input = configurations.Count.ToString();
+                //if (!Int32.TryParse(input, out configNumber)) configNumber = -1;
 
+                var tempconfig = configurations.Where(cf => cf.OrganizationName == GetAppConfig.OrganizationName).FirstOrDefault();
+
+                if (tempconfig != null)
+                {
+                    config = tempconfig;
+                    addConfig = false;
+                }
+                else
+                {
+                    addConfig = true;
+                }
+
+                /*
                 if (configNumber == 0)
                 {
                     addConfig = true;
@@ -240,6 +253,7 @@ namespace ConnectionLib
                 }
                 else
                     throw new InvalidOperationException("The specified server configuration does not exist.");
+                */
             }
             else
                 addConfig = true;
@@ -577,7 +591,7 @@ namespace ConnectionLib
                         do
                         {
                             Console.Write("\nEnter domain\\username: ");
-                            domainAndUserName = Console.ReadLine().Split('\\');
+                            domainAndUserName = GetAppConfig.User.Split('\\');//Console.ReadLine().Split('\\');
 
                             // If user do not choose to enter user name, 
                             // then try to use default credential from windows credential manager.
@@ -646,7 +660,7 @@ namespace ConnectionLib
                             Console.Write("\n Enter Microsoft account: ");
                         else
                             Console.Write("\n Enter Username: ");
-                        userName = Console.ReadLine();
+                        userName = GetAppConfig.User;//Console.ReadLine();
                         if (string.IsNullOrWhiteSpace(userName))
                         {
                             return null;
@@ -672,8 +686,9 @@ namespace ConnectionLib
         /// <returns>Password stored in a secure string.</returns>
         public static SecureString ReadPassword()
         {
-            SecureString ssPassword = new SecureString();
-
+            //SecureString ssPassword = new SecureString();
+            SecureString ssPassword = ConvertToSecureString(GetAppConfig.Password);
+            /*
             ConsoleKeyInfo info = Console.ReadKey(true);
             while (info.Key != ConsoleKey.Enter)
             {
@@ -695,6 +710,7 @@ namespace ConnectionLib
 
             Console.WriteLine();
             Console.WriteLine();
+            */
 
             // Lock the secure string password.
             ssPassword.MakeReadOnly();
@@ -892,7 +908,7 @@ namespace ConnectionLib
             ssl = false;
 
             Console.Write("Enter a CRM server name and port [crm.dynamics.com]: ");
-            String server = Console.ReadLine();
+            String server = GetAppConfig.ServerAddress;//Console.ReadLine();
 
             if (server.EndsWith(".dynamics.com") || String.IsNullOrWhiteSpace(server))
             {
@@ -901,7 +917,7 @@ namespace ConnectionLib
             else
             {
                 Console.Write("Is this server configured for Secure Socket Layer (https) (y/n) [n]: ");
-                String answer = Console.ReadLine();
+                String answer = GetAppConfig.SSL;//Console.ReadLine();
 
                 if (answer == "y" || answer == "Y")
                     ssl = true;
@@ -947,6 +963,7 @@ namespace ConnectionLib
 
                     if (orgs.Count > 0)
                     {
+                        /*
                         Console.WriteLine("\nList of organizations that you belong to:");
                         for (int n = 0; n < orgs.Count; n++)
                         {
@@ -961,11 +978,15 @@ namespace ConnectionLib
                         }
                         int orgNumber;
                         Int32.TryParse(input, out orgNumber);
-                        if (orgNumber > 0 && orgNumber <= orgs.Count)
+                        */
+                        var org = orgs.Where(o => o.FriendlyName == GetAppConfig.OrganizationName).FirstOrDefault();
+                        //if (orgNumber > 0 && orgNumber <= orgs.Count)
+                        if (org != null)
                         {
-                            config.OrganizationName = orgs[orgNumber - 1].FriendlyName;
+                            config.OrganizationName = org.FriendlyName;//orgs[orgNumber - 1].FriendlyName;
                             // Return the organization Uri.
-                            return new System.Uri(orgs[orgNumber - 1].Endpoints[EndpointType.OrganizationService]);
+                            //return new System.Uri(orgs[orgNumber - 1].Endpoints[EndpointType.OrganizationService]);
+                            return new System.Uri(org.Endpoints[EndpointType.OrganizationService]);
                         }
                         else
                             throw new InvalidOperationException("The specified organization does not exist.");
@@ -1204,9 +1225,10 @@ namespace ConnectionLib
             /// <summary>
             /// Credentials file path.
             /// </summary>
-            public static readonly string ServerCredentialsFile = Path.Combine(
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrmServer"),
-                "Credentials.xml");
+            //public static readonly string ServerCredentialsFile = Path.Combine(
+            //    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrmServer"),
+            //    "Credentials.xml");
+            public static readonly string ServerCredentialsFile = GetAppConfig.CredentialsFilePath;
         }
         #endregion        
     }
