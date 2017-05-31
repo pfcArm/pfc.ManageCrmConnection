@@ -34,6 +34,7 @@ namespace ConnectionLib
     {
         public static string ServerAddress { get { return ConfigurationManager.AppSettings["ServerAddress"]; } }
         public static string SSL { get { return ConfigurationManager.AppSettings["SSL"]; } }
+        public static string IsO365Org { get { return ConfigurationManager.AppSettings["IsO365Org"]; } }
         public static string OrganizationName { get { return ConfigurationManager.AppSettings["OrganizationName"]; } }
         public static string User { get { return ConfigurationManager.AppSettings["User"]; } }
         public static string Password { get { return ConfigurationManager.AppSettings["Password"]; } }

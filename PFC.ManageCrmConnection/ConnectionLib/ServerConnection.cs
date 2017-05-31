@@ -187,7 +187,7 @@ namespace ConnectionLib
             if (isConfigExist)
             {
                 // List of server configurations that are available from earlier saved settings.
-                Console.Write("\n(0) Add New Server Configuration (Maximum number up to 9)\t");
+                //Console.Write("\n(0) Add New Server Configuration (Maximum number up to 9)\t");
                 for (int n = 0; n < configurations.Count; n++)
                 {
                     String user;
@@ -209,13 +209,13 @@ namespace ConnectionLib
                             break;
                     }
 
-                    Console.Write("\n({0}) Server: {1},  Org: {2},  User: {3}\t",
-                        n + 1, configurations[n].ServerAddress, configurations[n].OrganizationName, user);
+                    //Console.Write("\n({0}) Server: {1},  Org: {2},  User: {3}\t",
+                    //    n + 1, configurations[n].ServerAddress, configurations[n].OrganizationName, user);
                 }
 
-                Console.WriteLine();
+                //Console.WriteLine();
 
-                Console.Write("\nSpecify the saved server configuration number (1-{0}) [{0}] : ", configurations.Count);
+                //Console.Write("\nSpecify the saved server configuration number (1-{0}) [{0}] : ", configurations.Count);
                 //String input = GetAppConfig.ConfigIndex;//Console.ReadLine();
                 //Console.WriteLine();
                 //if (input == String.Empty) input = configurations.Count.ToString();
@@ -566,12 +566,12 @@ namespace ConnectionLib
                         userName = config.Credentials.Windows.ClientCredential.UserName;
                         if (String.IsNullOrWhiteSpace(config.Credentials.Windows.ClientCredential.Password))
                         {
-                            Console.Write("\nEnter domain\\username: ");
-                            Console.WriteLine(
-                            config.Credentials.Windows.ClientCredential.Domain + "\\"
-                            + config.Credentials.Windows.ClientCredential.UserName);
+                            //Console.Write("\nEnter domain\\username: ");
+                            //Console.WriteLine(
+                            //config.Credentials.Windows.ClientCredential.Domain + "\\"
+                            //+ config.Credentials.Windows.ClientCredential.UserName);
 
-                            Console.Write("       Enter Password: ");
+                            //Console.Write("       Enter Password: ");
                             password = ReadPassword();
                         }
                         else
@@ -590,7 +590,7 @@ namespace ConnectionLib
                         String[] domainAndUserName;
                         do
                         {
-                            Console.Write("\nEnter domain\\username: ");
+                            //Console.Write("\nEnter domain\\username: ");
                             domainAndUserName = GetAppConfig.User.Split('\\');//Console.ReadLine().Split('\\');
 
                             // If user do not choose to enter user name, 
@@ -606,7 +606,7 @@ namespace ConnectionLib
                         domain = domainAndUserName[0];
                         userName = domainAndUserName[1];
 
-                        Console.Write("       Enter Password: ");
+                        //Console.Write("       Enter Password: ");
                         password = ReadPassword();
                     }
                     if (null != password)
@@ -632,10 +632,10 @@ namespace ConnectionLib
                         userName = config.Credentials.UserName.UserName;
                         if (String.IsNullOrWhiteSpace(config.Credentials.UserName.Password))
                         {
-                            Console.Write("\n Enter Username: ");
-                            Console.WriteLine(config.Credentials.UserName.UserName);
+                            //Console.Write("\n Enter Username: ");
+                            //Console.WriteLine(config.Credentials.UserName.UserName);
 
-                            Console.Write(" Enter Password: ");
+                            //Console.Write(" Enter Password: ");
                             password = ReadPassword();
                         }
                         else
@@ -656,17 +656,17 @@ namespace ConnectionLib
                     else
                     {
                         config.UserPrincipalName = String.Empty;
-                        if (config.EndpointType == AuthenticationProviderType.LiveId)
-                            Console.Write("\n Enter Microsoft account: ");
-                        else
-                            Console.Write("\n Enter Username: ");
+                        //if (config.EndpointType == AuthenticationProviderType.LiveId)
+                            //Console.Write("\n Enter Microsoft account: ");
+                        //else
+                            //Console.Write("\n Enter Username: ");
                         userName = GetAppConfig.User;//Console.ReadLine();
                         if (string.IsNullOrWhiteSpace(userName))
                         {
                             return null;
                         }
 
-                        Console.Write(" Enter Password: ");
+                        //Console.Write(" Enter Password: ");
                         password = ReadPassword();
                     }
                     credentials.UserName.UserName = userName;
@@ -907,7 +907,7 @@ namespace ConnectionLib
         {
             ssl = false;
 
-            Console.Write("Enter a CRM server name and port [crm.dynamics.com]: ");
+            //Console.Write("Enter a CRM server name and port [crm.dynamics.com]: ");
             String server = GetAppConfig.ServerAddress;//Console.ReadLine();
 
             if (server.EndsWith(".dynamics.com") || String.IsNullOrWhiteSpace(server))
@@ -916,7 +916,7 @@ namespace ConnectionLib
             }
             else
             {
-                Console.Write("Is this server configured for Secure Socket Layer (https) (y/n) [n]: ");
+                //Console.Write("Is this server configured for Secure Socket Layer (https) (y/n) [n]: ");
                 String answer = GetAppConfig.SSL;//Console.ReadLine();
 
                 if (answer == "y" || answer == "Y")
@@ -938,8 +938,8 @@ namespace ConnectionLib
             if (server.IndexOf('.') == -1)
                 return isO365Org;
 
-            Console.Write("Is this organization provisioned in Microsoft Office 365 (y/n) [y]: ");
-            String answer = Console.ReadLine();
+            //Console.Write("Is this organization provisioned in Microsoft Office 365 (y/n) [y]: ");
+            String answer = GetAppConfig.IsO365Org;//Console.ReadLine();
 
             if (answer == "y" || answer == "Y" || answer.Equals(String.Empty))
                 isO365Org = true;
@@ -993,7 +993,7 @@ namespace ConnectionLib
                     }
                     else
                     {
-                        Console.WriteLine("\nYou do not belong to any organizations on the specified server.");
+                        //Console.WriteLine("\nYou do not belong to any organizations on the specified server.");
                         return new System.Uri(String.Empty);
                     }
                 }
