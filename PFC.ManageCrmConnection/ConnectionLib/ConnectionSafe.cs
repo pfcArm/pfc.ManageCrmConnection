@@ -26,6 +26,11 @@ namespace ConnectionLib
                 ServerConnection serverConnect = new ServerConnection();
                 config = serverConnect.GetServerConfiguration();
             }
+            else if(config.OrganizationName != GetAppConfig.OrganizationName)
+            {
+                ServerConnection serverConnect = new ServerConnection();
+                config = serverConnect.GetServerConfiguration();
+            }
             return ServerConnection.GetOrganizationProxy(config);
         }
     }

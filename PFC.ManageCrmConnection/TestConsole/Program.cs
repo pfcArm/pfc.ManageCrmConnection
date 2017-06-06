@@ -14,7 +14,7 @@ namespace TestConsole
         {
             //ConnectionSafe con = new ConnectionSafe();
             //con.TryToUse();
-            var service = ConnectionSafe.GetOrganizationProxy();
+            //var service = ConnectionSafe.GetOrganizationProxy();
         }
     }
 }
